@@ -1,0 +1,191 @@
+#!/usr/bin/env python3
+import html
+import json
+import os
+import re
+import time
+import urllib.parse
+import urllib.request
+from collections import deque
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "assets" / "wix"
+MIGRATION = ROOT / "migration"
+OUT.mkdir(parents=True, exist_ok=True)
+MIGRATION.mkdir(parents=True, exist_ok=True)
+
+BASE = "https://www.get-your-wings.com"
+SEEDS = [
+    "/",
+    "/circle",
+    "/voice",
+    "/secure",
+    "/well",
+    "/well-1",
+    "/health-tests",
+    "/magazine",
+    "/aboutus",
+    "/blank-4",
+]
+EXCLUDE_PREFIXES = (
+    "/profile/",
+    "/account/",
+    "/login",
+    "/signup",
+    "/members-area",
+)
+UA = "Mozilla/5.0 (compatible; GYWMigrationBot/1.0; +https://www.get-your-wings.com/)"
+
+def fetch(url, timeout=30):
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        ctype = r.headers.get("content-type", "")
+        data = r.read()
+        return data, ctype, r.geturl()
+
+def clean_source(s):
+    s = html.unescape(s)
+    s = s.replace("\\/","/").replace("\\u002F","/").replace("\\u002f","/")
+    s = s.replace("\\u0026","&").replace("\\u003D","=").replace("\\u003d","=")
+    return s
+
+def get_links(text, current):
+    out = set()
+    for href in re.findall(r'href=["\']([^"\']+)["\']', text, re.I):
+        href = html.unescape(href)
+        url = urllib.parse.urljoin(current, href)
+        p = urllib.parse.urlparse(url)
+        if p.scheme not in ("http","https") or p.netloc not in ("www.get-your-wings.com","get-your-wings.com"):
+            continue
+        path = p.path or "/"
+        if any(path.startswith(x) for x in EXCLUDE_PREFIXES):
+            continue
+        if re.search(r'\.(?:jpg|jpeg|png|webp|svg|gif|pdf|zip|xml|txt)$', path, re.I):
+            continue
+        out.add(BASE + path + (("?" + p.query) if p.query else ""))
+    return out
+
+def extract_wix_urls(text):
+    text = clean_source(text)
+    urls = set()
+    for m in re.finditer(r'https://static\.wixstatic\.com/media/[^\s"\'<>]+', text, re.I):
+        u = m.group(0).rstrip("),;]")
+        urls.add(u)
+    return urls
+
+def media_token(url):
+    m = re.search(r'https://static\.wixstatic\.com/media/([^/?#]+?\.(?:png|jpe?g|webp|svg|gif|avif))', url, re.I)
+    return m.group(1) if m else None
+
+def safe_name(token):
+    stem, ext = os.path.splitext(token)
+    stem = re.sub(r'[^A-Za-z0-9._-]+', '_', stem)
+    return stem[:180] + ext.lower()
+
+queue = deque(BASE + p for p in SEEDS)
+seen = set()
+pages = []
+all_assets = {}
+MAX_PAGES = 120
+
+while queue and len(seen) < MAX_PAGES:
+    url = queue.popleft()
+    if url in seen:
+        continue
+    seen.add(url)
+    try:
+        data, ctype, final_url = fetch(url)
+        if "text/html" not in ctype and not data.lstrip().startswith(b"<!"):
+            continue
+        text = data.decode("utf-8", "ignore")
+    except Exception as e:
+        pages.append({"url": url, "error": str(e)})
+        continue
+
+    title = ""
+    tm = re.search(r"<title[^>]*>(.*?)</title>", text, re.I | re.S)
+    if tm:
+        title = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", html.unescape(tm.group(1)))).strip()
+
+    wix_urls = extract_wix_urls(text)
+    for u in wix_urls:
+        token = media_token(u)
+        if token:
+            all_assets.setdefault(token, set()).add(u)
+
+    links = get_links(text, final_url)
+    for link in sorted(links):
+        if link not in seen and len(seen) + len(queue) < MAX_PAGES * 2:
+            queue.append(link)
+
+    pages.append({
+        "url": final_url,
+        "title": title,
+        "wix_asset_count": len(wix_urls),
+        "internal_link_count": len(links),
+    })
+    time.sleep(0.05)
+
+manifest = {}
+for i, (token, variants) in enumerate(sorted(all_assets.items()), 1):
+    filename = safe_name(token)
+    target = OUT / filename
+    base_url = "https://static.wixstatic.com/media/" + token
+    ok = target.exists() and target.stat().st_size > 0
+    error = None
+    if not ok:
+        candidates = [base_url] + sorted(variants, key=len)
+        for candidate in candidates:
+            try:
+                data, ctype, _ = fetch(candidate, timeout=45)
+                if len(data) < 32:
+                    raise RuntimeError("response too small")
+                target.write_bytes(data)
+                ok = True
+                break
+            except Exception as e:
+                error = str(e)
+    manifest[token] = {
+        "local": "/assets/wix/" + filename,
+        "bytes": target.stat().st_size if target.exists() else 0,
+        "downloaded": bool(ok),
+        "source": base_url,
+        "variants_seen": len(variants),
+        "error": None if ok else error,
+    }
+    print(f"[{i}/{len(all_assets)}] {'OK' if ok else 'FAIL'} {token}")
+
+# Replace all Wix image references already used by the clean frontend with local files.
+text_files = list(ROOT.glob("*.html")) + list(ROOT.glob("*/*.html")) + list((ROOT / "assets").glob("*.css"))
+for path in text_files:
+    try:
+        original = path.read_text(encoding="utf-8")
+    except Exception:
+        continue
+    updated = original
+    for token, info in manifest.items():
+        if not info["downloaded"]:
+            continue
+        pat = r'https://static\.wixstatic\.com/media/' + re.escape(token) + r'[^\s"\')<>]*'
+        updated = re.sub(pat, info["local"], updated)
+    if updated != original:
+        path.write_text(updated, encoding="utf-8")
+
+(MIGRATION / "asset-manifest.json").write_text(
+    json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8"
+)
+(MIGRATION / "page-inventory.json").write_text(
+    json.dumps(pages, indent=2, ensure_ascii=False), encoding="utf-8"
+)
+summary = {
+    "pages_crawled": len([p for p in pages if "error" not in p]),
+    "page_errors": len([p for p in pages if "error" in p]),
+    "unique_wix_assets": len(manifest),
+    "assets_downloaded": sum(1 for x in manifest.values() if x["downloaded"]),
+    "assets_failed": sum(1 for x in manifest.values() if not x["downloaded"]),
+}
+(MIGRATION / "summary.json").write_text(
+    json.dumps(summary, indent=2), encoding="utf-8"
+)
+print(json.dumps(summary, indent=2))
