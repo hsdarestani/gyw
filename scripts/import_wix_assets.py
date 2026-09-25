@@ -112,6 +112,7 @@ def safe_name(token):
 queue = deque(BASE + p for p in SEEDS)
 seen = set()
 pages = []
+page_html = {}
 all_assets = {}
 
 # Always include every Wix media URL already referenced by the local static site.
@@ -137,7 +138,7 @@ while queue and len(seen) < MAX_PAGES:
         continue
     seen.add(url)
     try:
-        data, ctype, final_url = fetch(url)
+        data, ctype, final_url = fetch(url, retries=1)
         if "text/html" not in ctype and not data.lstrip().startswith(b"<!"):
             continue
         text = data.decode("utf-8", "ignore")
@@ -156,6 +157,10 @@ while queue and len(seen) < MAX_PAGES:
         if token:
             all_assets.setdefault(token, set()).add(u)
 
+    parsed_final = urllib.parse.urlparse(final_url)
+    page_path = parsed_final.path or "/"
+    page_html[page_path] = text
+
     links = get_links(text, final_url)
     for link in sorted(links):
         if link not in seen and len(seen) + len(queue) < MAX_PAGES * 2:
@@ -167,7 +172,7 @@ while queue and len(seen) < MAX_PAGES:
         "wix_asset_count": len(wix_urls),
         "internal_link_count": len(links),
     })
-    time.sleep(2.0)
+    time.sleep(0.25)
 
 manifest = {}
 for i, (token, variants) in enumerate(sorted(all_assets.items()), 1):
