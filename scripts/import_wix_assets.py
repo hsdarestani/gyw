@@ -113,6 +113,22 @@ queue = deque(BASE + p for p in SEEDS)
 seen = set()
 pages = []
 all_assets = {}
+
+# Always include every Wix media URL already referenced by the local static site.
+# This makes the migration deterministic even when Wix rate-limits the crawler.
+local_source_files = list(ROOT.rglob("*.html")) + list(ROOT.rglob("*.css"))
+for local_path in local_source_files:
+    if ".git" in local_path.parts or "assets/wix" in local_path.as_posix():
+        continue
+    try:
+        local_text = local_path.read_text(encoding="utf-8")
+    except Exception:
+        continue
+    for u in extract_wix_urls(local_text):
+        token = media_token(u)
+        if token:
+            all_assets.setdefault(token, set()).add(u)
+
 MAX_PAGES = 60
 
 while queue and len(seen) < MAX_PAGES:
@@ -277,8 +293,10 @@ for path, source in sorted(page_html.items()):
         dest.write_text(article_shell(title, BASE + path, "".join(chunks)), encoding="utf-8")
 
 # Replace all Wix image references already used by the clean frontend with local files.
-text_files = list(ROOT.glob("*.html")) + list(ROOT.glob("*/*.html")) + list((ROOT / "assets").glob("*.css"))
+text_files = list(ROOT.rglob("*.html")) + list(ROOT.rglob("*.css"))
 for path in text_files:
+    if ".git" in path.parts or "assets/wix" in path.as_posix():
+        continue
     try:
         original = path.read_text(encoding="utf-8")
     except Exception:
