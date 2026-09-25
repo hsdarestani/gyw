@@ -116,6 +116,7 @@ page_html = {}
 all_assets = {}
 
 # Always include every Wix media URL already referenced by the local static site.
+# This also captures approved visual legal documents before Wix is retired.
 # This makes the migration deterministic even when Wix rate-limits the crawler.
 local_source_files = list(ROOT.rglob("*.html")) + list(ROOT.rglob("*.css"))
 for local_path in local_source_files:
