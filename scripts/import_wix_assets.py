@@ -8,7 +8,8 @@ import urllib.parse
 import urllib.request
 import urllib.error
 from collections import deque
-from pathlib import Path\nfrom bs4 import BeautifulSoup
+from pathlib import Path
+from bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "wix"
