@@ -29,11 +29,15 @@
   },
   {
     "url": "https://www.get-your-wings.com/health-tests",
-    "error": "HTTP Error 429: Too Many Requests"
+    "title": "health-tests | GetYourWings",
+    "wix_asset_count": 7,
+    "internal_link_count": 42
   },
   {
     "url": "https://www.get-your-wings.com/magazine",
-    "error": "HTTP Error 429: Too Many Requests"
+    "title": "Magazine",
+    "wix_asset_count": 38,
+    "internal_link_count": 11
   },
   {
     "url": "https://www.get-your-wings.com/aboutus",
@@ -77,6 +81,126 @@
   },
   {
     "url": "https://www.get-your-wings.com/gyw-events/womens-health-summit",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/allergy-intolerance-screening-019dd876",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/allergy-intolerance-screening-1ef6eb74",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/allergy-screening-295-allergens-019dd901",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/allergy-screening-295-allergens-1ef6eb72",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/burnout-risk-test-019dd87b",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/cardiovascular-risk-profile-019dd8e0",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/colorectal-cancer-screening-1f015f3d",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/complete-sti-check-019ed5b0",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/complete-vitamin-analysis-1eee2532",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/fertility-analysis-019dbc02",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/fitness-profile-1f015f2f",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/food-intolerance-check-286-019dbc3f",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/food-intolerance-check-286-1ef6eb76",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/gut-microbiome-check-1f01095c",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/hpv-high-risk-type-test-1f015f4d",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/kidney-profile-1f015f0a",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/lipoprotein-a-019d4d84",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/menopause-profile-019dd9bf",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/mens-health-profile-019dd887",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/mens-hormone-profile-019dbc37",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/metabolic-profile-019b3641",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/nutrient-analysis-019dd969",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/nutrient-analysis-plus-019f88cd",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/nutrient-analysis-plus-1f015fea",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/sti-check-basic-1f015fa4",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/sti-quick-swab-test-for-women-019d2024",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/sti-quick-urine-test-for-men-019d201f",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/vitamin-b1-test-1eee49db",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/vitamin-b6-test-1eee49e7",
+    "error": "HTTP Error 429: Too Many Requests"
+  },
+  {
+    "url": "https://www.get-your-wings.com/healthtests/womens-health-profile-019dd86e",
     "error": "HTTP Error 429: Too Many Requests"
   }
 ]

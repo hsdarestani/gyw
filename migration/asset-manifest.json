@@ -1,4 +1,12 @@
 {
+  "11062b_04314148f3e246cc9f921b84338db23e~mv2.jpg": {
+    "local": "/assets/wix/11062b_04314148f3e246cc9f921b84338db23e_mv2.jpg",
+    "bytes": 6451155,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/11062b_04314148f3e246cc9f921b84338db23e~mv2.jpg",
+    "variants_seen": 1,
+    "error": null
+  },
   "11062b_a542f44e74154b8a9d065b4e65c8d7ff~mv2.jpeg": {
     "local": "/assets/wix/11062b_a542f44e74154b8a9d065b4e65c8d7ff_mv2.jpeg",
     "bytes": 7636422,
@@ -7,12 +15,28 @@
     "variants_seen": 7,
     "error": null
   },
+  "55d98a_3287270d83ef4efabfdd1f52d0dc6ec2~mv2.jpg": {
+    "local": "/assets/wix/55d98a_3287270d83ef4efabfdd1f52d0dc6ec2_mv2.jpg",
+    "bytes": 2134212,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/55d98a_3287270d83ef4efabfdd1f52d0dc6ec2~mv2.jpg",
+    "variants_seen": 1,
+    "error": null
+  },
   "6ededf_371ff2e027214a9b8c0dfd58b88456a9~mv2.jpg": {
     "local": "/assets/wix/6ededf_371ff2e027214a9b8c0dfd58b88456a9_mv2.jpg",
     "bytes": 783261,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/6ededf_371ff2e027214a9b8c0dfd58b88456a9~mv2.jpg",
     "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_0055497762d94bb5870d78f1b6f420f1~mv2.png": {
+    "local": "/assets/wix/7a2e18_0055497762d94bb5870d78f1b6f420f1_mv2.png",
+    "bytes": 1847233,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_0055497762d94bb5870d78f1b6f420f1~mv2.png",
+    "variants_seen": 2,
     "error": null
   },
   "7a2e18_02be05fd71e54c818e20740416ce6c49~mv2.png": {
@@ -39,6 +63,14 @@
     "variants_seen": 1,
     "error": null
   },
+  "7a2e18_107231ae3f7645f982f14c890155a418~mv2.png": {
+    "local": "/assets/wix/7a2e18_107231ae3f7645f982f14c890155a418_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_107231ae3f7645f982f14c890155a418~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
   "7a2e18_10cd8edc69a24191bcf261e5891c151d~mv2.png": {
     "local": "/assets/wix/7a2e18_10cd8edc69a24191bcf261e5891c151d_mv2.png",
     "bytes": 1826022,
@@ -60,14 +92,6 @@
     "bytes": 1713564,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_137366ab95d34e028a638ddcb0ee3bb8~mv2.png",
-    "variants_seen": 1,
-    "error": null
-  },
-  "7a2e18_1957bdf4e9e3400ab2b19e8b549d6f3d~mv2.png": {
-    "local": "/assets/wix/7a2e18_1957bdf4e9e3400ab2b19e8b549d6f3d_mv2.png",
-    "bytes": 1753235,
-    "downloaded": true,
-    "source": "https://static.wixstatic.com/media/7a2e18_1957bdf4e9e3400ab2b19e8b549d6f3d~mv2.png",
     "variants_seen": 1,
     "error": null
   },
@@ -103,19 +127,19 @@
     "variants_seen": 1,
     "error": null
   },
-  "7a2e18_46dbf9a67f874ed286b7c878814daf9b~mv2.png": {
-    "local": "/assets/wix/7a2e18_46dbf9a67f874ed286b7c878814daf9b_mv2.png",
-    "bytes": 1545721,
+  "7a2e18_4c9fbbef5ffc4187aa588bf3a3e65123~mv2.png": {
+    "local": "/assets/wix/7a2e18_4c9fbbef5ffc4187aa588bf3a3e65123_mv2.png",
+    "bytes": 3098406,
     "downloaded": true,
-    "source": "https://static.wixstatic.com/media/7a2e18_46dbf9a67f874ed286b7c878814daf9b~mv2.png",
-    "variants_seen": 1,
+    "source": "https://static.wixstatic.com/media/7a2e18_4c9fbbef5ffc4187aa588bf3a3e65123~mv2.png",
+    "variants_seen": 3,
     "error": null
   },
-  "7a2e18_4e703bfb84cf47009058cd8d562ba9a4~mv2.png": {
-    "local": "/assets/wix/7a2e18_4e703bfb84cf47009058cd8d562ba9a4_mv2.png",
-    "bytes": 1613165,
+  "7a2e18_560d0260ce4243d3aebba5c0bdeb4103~mv2.png": {
+    "local": "/assets/wix/7a2e18_560d0260ce4243d3aebba5c0bdeb4103_mv2.png",
+    "bytes": 2133559,
     "downloaded": true,
-    "source": "https://static.wixstatic.com/media/7a2e18_4e703bfb84cf47009058cd8d562ba9a4~mv2.png",
+    "source": "https://static.wixstatic.com/media/7a2e18_560d0260ce4243d3aebba5c0bdeb4103~mv2.png",
     "variants_seen": 1,
     "error": null
   },
@@ -125,6 +149,14 @@
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_5f5c0528b40640a88fa2f1689c5136eb~mv2.png",
     "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_5fcdcdffd3d8427bbe80ecd86898e1ac~mv2.png": {
+    "local": "/assets/wix/7a2e18_5fcdcdffd3d8427bbe80ecd86898e1ac_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_5fcdcdffd3d8427bbe80ecd86898e1ac~mv2.png",
+    "variants_seen": 3,
     "error": null
   },
   "7a2e18_6483d28883b847e9a0980756381f2f86~mv2.png": {
@@ -175,6 +207,22 @@
     "variants_seen": 1,
     "error": null
   },
+  "7a2e18_7a6eef07a8d84010a1176e5589f00e2e~mv2.png": {
+    "local": "/assets/wix/7a2e18_7a6eef07a8d84010a1176e5589f00e2e_mv2.png",
+    "bytes": 1833011,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_7a6eef07a8d84010a1176e5589f00e2e~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_7fa82f89da17464db62895cc16b0a8ab~mv2.png": {
+    "local": "/assets/wix/7a2e18_7fa82f89da17464db62895cc16b0a8ab_mv2.png",
+    "bytes": 1428500,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_7fa82f89da17464db62895cc16b0a8ab~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
   "7a2e18_81bc20865bc24dccb4f259916b648bb9~mv2.png": {
     "local": "/assets/wix/7a2e18_81bc20865bc24dccb4f259916b648bb9_mv2.png",
     "bytes": 1762946,
@@ -199,11 +247,27 @@
     "variants_seen": 1,
     "error": null
   },
+  "7a2e18_8ad1b687a41442658de10a984bb9dba9~mv2.png": {
+    "local": "/assets/wix/7a2e18_8ad1b687a41442658de10a984bb9dba9_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_8ad1b687a41442658de10a984bb9dba9~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
   "7a2e18_9207a502af9f453d9abf71a97e3586f6~mv2.png": {
     "local": "/assets/wix/7a2e18_9207a502af9f453d9abf71a97e3586f6_mv2.png",
     "bytes": 1060220,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_9207a502af9f453d9abf71a97e3586f6~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_998c5eab460e4873af3753e39af08b0a~mv2.jpg": {
+    "local": "/assets/wix/7a2e18_998c5eab460e4873af3753e39af08b0a_mv2.jpg",
+    "bytes": 811190,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_998c5eab460e4873af3753e39af08b0a~mv2.jpg",
     "variants_seen": 1,
     "error": null
   },
@@ -221,6 +285,22 @@
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_9e6667c798344f35a757a53de38cfd58~mv2.png",
     "variants_seen": 2,
+    "error": null
+  },
+  "7a2e18_a0bae842fa6a466ea152542d341607ee~mv2.png": {
+    "local": "/assets/wix/7a2e18_a0bae842fa6a466ea152542d341607ee_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_a0bae842fa6a466ea152542d341607ee~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_a126176af3594ea6b5caafa894c68f67~mv2.png": {
+    "local": "/assets/wix/7a2e18_a126176af3594ea6b5caafa894c68f67_mv2.png",
+    "bytes": 1890750,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_a126176af3594ea6b5caafa894c68f67~mv2.png",
+    "variants_seen": 1,
     "error": null
   },
   "7a2e18_a7ba65fd0c924e4f8f62dd7c4dea39e2~mv2.png": {
@@ -247,6 +327,22 @@
     "variants_seen": 1,
     "error": null
   },
+  "7a2e18_b5a1189c2b484150b9e1c23701faea46~mv2.png": {
+    "local": "/assets/wix/7a2e18_b5a1189c2b484150b9e1c23701faea46_mv2.png",
+    "bytes": 2184305,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_b5a1189c2b484150b9e1c23701faea46~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_c3e793e639814f5096ba8805bcff7137~mv2.png": {
+    "local": "/assets/wix/7a2e18_c3e793e639814f5096ba8805bcff7137_mv2.png",
+    "bytes": 2043222,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_c3e793e639814f5096ba8805bcff7137~mv2.png",
+    "variants_seen": 2,
+    "error": null
+  },
   "7a2e18_c4c541dd0dcb46d7aece7ef22fbf745e~mv2.png": {
     "local": "/assets/wix/7a2e18_c4c541dd0dcb46d7aece7ef22fbf745e_mv2.png",
     "bytes": 1651976,
@@ -260,7 +356,7 @@
     "bytes": 634050,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_c5b921ca3d18425c9206605bf2a12b9a~mv2.png",
-    "variants_seen": 2,
+    "variants_seen": 3,
     "error": null
   },
   "7a2e18_c6064992a3ed4a89bd8ef6e2d2479b6a~mv2.png": {
@@ -276,6 +372,14 @@
     "bytes": 573931,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_cc3656cfc4484c4494aced2bbef3df18~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_d16e8bdb7dd145718c9025d059ae9905~mv2.png": {
+    "local": "/assets/wix/7a2e18_d16e8bdb7dd145718c9025d059ae9905_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_d16e8bdb7dd145718c9025d059ae9905~mv2.png",
     "variants_seen": 1,
     "error": null
   },
@@ -295,11 +399,35 @@
     "variants_seen": 1,
     "error": null
   },
+  "7a2e18_d5ffb34bb19347c8bcdf1734468990d7~mv2.png": {
+    "local": "/assets/wix/7a2e18_d5ffb34bb19347c8bcdf1734468990d7_mv2.png",
+    "bytes": 1732284,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_d5ffb34bb19347c8bcdf1734468990d7~mv2.png",
+    "variants_seen": 2,
+    "error": null
+  },
   "7a2e18_d7b99ad727bf41518d870c54b5587654~mv2.png": {
     "local": "/assets/wix/7a2e18_d7b99ad727bf41518d870c54b5587654_mv2.png",
     "bytes": 1073657,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_d7b99ad727bf41518d870c54b5587654~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_d9d6c183e3344eb4a56ed0ae0e429412~mv2.png": {
+    "local": "/assets/wix/7a2e18_d9d6c183e3344eb4a56ed0ae0e429412_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_d9d6c183e3344eb4a56ed0ae0e429412~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_dc7a3a6b48604771977cac643c820408~mv2.png": {
+    "local": "/assets/wix/7a2e18_dc7a3a6b48604771977cac643c820408_mv2.png",
+    "bytes": 3098406,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_dc7a3a6b48604771977cac643c820408~mv2.png",
     "variants_seen": 1,
     "error": null
   },
@@ -316,6 +444,30 @@
     "bytes": 1495282,
     "downloaded": true,
     "source": "https://static.wixstatic.com/media/7a2e18_e5e206f58f7a493faad049ded896cf2e~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_eb0b4db0cd9548c19133bb2e957861aa~mv2.png": {
+    "local": "/assets/wix/7a2e18_eb0b4db0cd9548c19133bb2e957861aa_mv2.png",
+    "bytes": 1724240,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_eb0b4db0cd9548c19133bb2e957861aa~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "7a2e18_f442404e6f5b4841919b9c097b4198aa~mv2.png": {
+    "local": "/assets/wix/7a2e18_f442404e6f5b4841919b9c097b4198aa_mv2.png",
+    "bytes": 382802,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/7a2e18_f442404e6f5b4841919b9c097b4198aa~mv2.png",
+    "variants_seen": 1,
+    "error": null
+  },
+  "f900bb_c6dd7df5568e4d16b660de317f707114~mv2.png": {
+    "local": "/assets/wix/f900bb_c6dd7df5568e4d16b660de317f707114_mv2.png",
+    "bytes": 514211,
+    "downloaded": true,
+    "source": "https://static.wixstatic.com/media/f900bb_c6dd7df5568e4d16b660de317f707114~mv2.png",
     "variants_seen": 1,
     "error": null
   }
