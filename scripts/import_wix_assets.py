@@ -6,6 +6,7 @@ import re
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 from collections import deque
 from pathlib import Path\nfrom bs4 import BeautifulSoup
 
@@ -37,12 +38,36 @@ EXCLUDE_PREFIXES = (
 )
 UA = "Mozilla/5.0 (compatible; GYWMigrationBot/1.0; +https://www.get-your-wings.com/)"
 
-def fetch(url, timeout=30):
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        ctype = r.headers.get("content-type", "")
-        data = r.read()
-        return data, ctype, r.geturl()
+def fetch(url, timeout=30, retries=5):
+    last_error = None
+    for attempt in range(retries):
+        req = urllib.request.Request(url, headers={
+            "User-Agent": UA,
+            "Accept-Language": "en-US,en;q=0.8",
+            "Cache-Control": "no-cache",
+        })
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                ctype = r.headers.get("content-type", "")
+                data = r.read()
+                return data, ctype, r.geturl()
+        except urllib.error.HTTPError as e:
+            last_error = e
+            if e.code != 429 or attempt == retries - 1:
+                raise
+            retry_after = e.headers.get("Retry-After")
+            try:
+                delay = max(float(retry_after), 5.0)
+            except Exception:
+                delay = 6.0 * (attempt + 1)
+            print(f"429 for {url}; retrying after {delay:.0f}s")
+            time.sleep(delay)
+        except Exception as e:
+            last_error = e
+            if attempt == retries - 1:
+                raise
+            time.sleep(2.0 * (attempt + 1))
+    raise last_error
 
 def clean_source(s):
     s = html.unescape(s)
@@ -87,7 +112,7 @@ queue = deque(BASE + p for p in SEEDS)
 seen = set()
 pages = []
 all_assets = {}
-MAX_PAGES = 120
+MAX_PAGES = 60
 
 while queue and len(seen) < MAX_PAGES:
     url = queue.popleft()
@@ -125,7 +150,7 @@ while queue and len(seen) < MAX_PAGES:
         "wix_asset_count": len(wix_urls),
         "internal_link_count": len(links),
     })
-    time.sleep(0.05)
+    time.sleep(2.0)
 
 manifest = {}
 for i, (token, variants) in enumerate(sorted(all_assets.items()), 1):
@@ -156,6 +181,46 @@ for i, (token, variants) in enumerate(sorted(all_assets.items()), 1):
     }
     print(f"[{i}/{len(all_assets)}] {'OK' if ok else 'FAIL'} {token}")
 
+
+def generic_content_shell(title, eyebrow, source_url, body_html):
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} | Get Your Wings</title><meta name="description" content="Get Your Wings"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/styles.css"></head><body>
+<div class="topline">GET YOUR WINGS · THE GLOBAL PLATFORM FOR WOMEN</div>
+<header class="site-header"><div class="container nav"><nav class="navlinks"><a href="/">Start</a><a href="/circle/">Circle</a><a href="/voice/">Voice</a><a href="/secure/">Secure</a><a href="/well/">Well</a><a href="/health/">Health</a></nav><a class="brand" href="/">GET YOUR WINGS</a><nav class="navlinks right"><a href="/magazine/">Magazine</a><a href="/about/">About</a><a href="/partners/">Partners</a></nav><button class="menu-btn" data-menu aria-label="Open menu">☰</button></div></header>
+<div class="mobile-menu"><button class="close" data-close aria-label="Close menu">×</button><nav><a href="/">Start</a><a href="/circle/">Circle</a><a href="/voice/">Voice</a><a href="/secure/">Secure</a><a href="/well/">Well</a><a href="/health/">Health</a><a href="/magazine/">Magazine</a></nav></div>
+<main class="section"><article class="container article-body"><div class="eyebrow">{html.escape(eyebrow)}</div><h1 class="display">{html.escape(title)}</h1>{body_html}<p class="article-source">Migrated from <a href="{html.escape(source_url)}">the original Get Your Wings page</a>.</p></article></main>
+<script src="/assets/app.js" defer></script></body></html>"""
+
+def extract_clean_content(source, fallback_title):
+    soup = BeautifulSoup(source, "html.parser")
+    h1 = soup.find("h1")
+    title = h1.get_text(" ", strip=True) if h1 else fallback_title
+    main = soup.find("main") or soup.body or soup
+    for bad in main.find_all(["script","style","nav","header","footer","form","svg","noscript"]):
+        bad.decompose()
+    chunks = []
+    seen_text = set()
+    for el in main.find_all(["h2","h3","h4","p","ul","ol","img"]):
+        if el.name == "img":
+            src = el.get("src") or el.get("data-src")
+            alt = el.get("alt","")
+            if src and "static.wixstatic.com/media/" in src:
+                chunks.append(f'<img src="{html.escape(src)}" alt="{html.escape(alt)}" loading="lazy">')
+            continue
+        text_value = " ".join(el.get_text(" ", strip=True).split())
+        if not text_value or len(text_value) < 2 or text_value in seen_text:
+            continue
+        seen_text.add(text_value)
+        if el.name in ("h2","h3","h4"):
+            chunks.append(f"<{el.name}>{html.escape(text_value)}</{el.name}>")
+        elif el.name in ("ul","ol"):
+            items = [" ".join(li.get_text(" ", strip=True).split()) for li in el.find_all("li", recursive=False)]
+            items = [x for x in items if x]
+            if items:
+                chunks.append("<ul>" + "".join(f"<li>{html.escape(x)}</li>" for x in items) + "</ul>")
+        else:
+            chunks.append(f"<p>{html.escape(text_value)}</p>")
+    return title, "".join(chunks)
+
 # Generate clean local article pages from the public Wix posts.
 def article_shell(title, source_url, body_html):
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} | Get Your Wings</title><meta name="description" content="Get Your Wings Magazine"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/styles.css"></head><body>
@@ -166,6 +231,15 @@ def article_shell(title, source_url, body_html):
 <script src="/assets/app.js" defer></script></body></html>"""
 
 for path, source in sorted(page_html.items()):
+    if path.startswith("/gyw-events/") or path.startswith("/service-page/"):
+        fallback = path.rsplit("/", 1)[-1].replace("-", " ").title()
+        title, clean_body = extract_clean_content(source, fallback)
+        if clean_body:
+            dest = ROOT / path.lstrip("/") / "index.html"
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            eyebrow = "Event" if path.startswith("/gyw-events/") else "Service"
+            dest.write_text(generic_content_shell(title, eyebrow, BASE + path, clean_body), encoding="utf-8")
+        continue
     if not path.startswith("/post/"):
         continue
     soup = BeautifulSoup(source, "html.parser")
