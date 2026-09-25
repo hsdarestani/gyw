@@ -7,7 +7,7 @@ import time
 import urllib.parse
 import urllib.request
 from collections import deque
-from pathlib import Path
+from pathlib import Path\nfrom bs4 import BeautifulSoup
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "wix"
@@ -155,6 +155,51 @@ for i, (token, variants) in enumerate(sorted(all_assets.items()), 1):
         "error": None if ok else error,
     }
     print(f"[{i}/{len(all_assets)}] {'OK' if ok else 'FAIL'} {token}")
+
+# Generate clean local article pages from the public Wix posts.
+def article_shell(title, source_url, body_html):
+    return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} | Get Your Wings</title><meta name="description" content="Get Your Wings Magazine"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/styles.css"></head><body>
+<div class="topline">GET YOUR WINGS · THE GLOBAL PLATFORM FOR WOMEN</div>
+<header class="site-header"><div class="container nav"><nav class="navlinks"><a href="/">Start</a><a href="/circle/">Circle</a><a href="/voice/">Voice</a><a href="/secure/">Secure</a><a href="/well/">Well</a><a href="/health/">Health</a></nav><a class="brand" href="/">GET YOUR WINGS</a><nav class="navlinks right"><a href="/magazine/">Magazine</a><a href="/about/">About</a><a href="/partners/">Partners</a></nav><button class="menu-btn" data-menu aria-label="Open menu">☰</button></div></header>
+<div class="mobile-menu"><button class="close" data-close aria-label="Close menu">×</button><nav><a href="/">Start</a><a href="/circle/">Circle</a><a href="/voice/">Voice</a><a href="/secure/">Secure</a><a href="/well/">Well</a><a href="/health/">Health</a><a href="/magazine/">Magazine</a></nav></div>
+<main class="section"><article class="container article-body"><div class="eyebrow">Magazine</div><h1 class="display">{html.escape(title)}</h1>{body_html}<p class="article-source">Migrated from <a href="{html.escape(source_url)}">the original Get Your Wings article</a>.</p></article></main>
+<script src="/assets/app.js" defer></script></body></html>"""
+
+for path, source in sorted(page_html.items()):
+    if not path.startswith("/post/"):
+        continue
+    soup = BeautifulSoup(source, "html.parser")
+    h1 = soup.find("h1")
+    title = h1.get_text(" ", strip=True) if h1 else path.rsplit("/", 1)[-1].replace("-", " ").title()
+    main = soup.find("main") or soup.body or soup
+    for bad in main.find_all(["script","style","nav","header","footer","form","svg","noscript"]):
+        bad.decompose()
+    chunks = []
+    seen_text = set()
+    for el in main.find_all(["h2","h3","p","ul","ol","img"]):
+        if el.name == "img":
+            src = el.get("src") or el.get("data-src")
+            alt = el.get("alt","")
+            if src and "static.wixstatic.com/media/" in src:
+                chunks.append(f'<img src="{html.escape(src)}" alt="{html.escape(alt)}" loading="lazy">')
+            continue
+        text_value = " ".join(el.get_text(" ", strip=True).split())
+        if not text_value or len(text_value) < 2 or text_value in seen_text:
+            continue
+        seen_text.add(text_value)
+        if el.name in ("h2","h3"):
+            chunks.append(f"<{el.name}>{html.escape(text_value)}</{el.name}>")
+        elif el.name in ("ul","ol"):
+            items = [" ".join(li.get_text(" ", strip=True).split()) for li in el.find_all("li", recursive=False)]
+            items = [x for x in items if x]
+            if items:
+                chunks.append("<ul>" + "".join(f"<li>{html.escape(x)}</li>" for x in items) + "</ul>")
+        else:
+            chunks.append(f"<p>{html.escape(text_value)}</p>")
+    if chunks:
+        dest = ROOT / path.lstrip("/") / "index.html"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(article_shell(title, BASE + path, "".join(chunks)), encoding="utf-8")
 
 # Replace all Wix image references already used by the clean frontend with local files.
 text_files = list(ROOT.glob("*.html")) + list(ROOT.glob("*/*.html")) + list((ROOT / "assets").glob("*.css"))
