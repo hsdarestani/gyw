@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: gyw-wix-import
+  cancel-in-progress: true
+
 jobs:
   import:
     runs-on: ubuntu-latest
