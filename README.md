@@ -1,29 +1,34 @@
 # Get Your Wings
 
-Clean static rebuild of the public Get Your Wings website for Cloudflare Pages.
+Static Cloudflare Pages migration of the public Get Your Wings website.
 
-## Cloudflare Pages
-
-Use these settings:
-
+## Cloudflare Pages settings
 - Framework preset: None
 - Build command: leave empty
 - Build output directory: .
 - Root directory: /
 
-The site is plain HTML, CSS and JavaScript, so no Node build is required.
+## Migrated public areas
+- Start
+- Circle and public event discovery
+- Voice
+- Secure
+- Well
+- Health
+- Health Tests with client side search and category filtering
+- Magazine index
+- 15 current public Magazine article routes
+- About
+- Partners
+- Expert booking/service information
+- Legal placeholder route
+- Cloudflare redirects, security headers, robots.txt, sitemap and 404 page
 
-## Routes
+## Dynamic Wix features
+The static migration does not reproduce Wix member authentication, health dashboards, checkout, member registrations, newsletter storage, or appointment scheduling. Those require a backend or external provider integration before Wix can be fully retired.
 
-- /
-- /circle/
-- /voice/
-- /secure/
-- /well/
-- /magazine/
-- /about/
-- /partners/
+## Assets
+The frontend itself does not use the Wix runtime. Current migrated visuals are still loaded from static.wixstatic.com because the connected tools cannot export those binary Wix media files directly. Copying the owned originals into /assets/media later will make the deployment completely independent of Wix.
 
-## Notes
-
-The rebuild removes the Wix runtime and keeps the frontend intentionally lightweight. Current visual assets are referenced from the existing Get Your Wings CDN so the repository stays small. Those assets can later be downloaded into /assets if you want the deployment to be fully independent of Wix.
+## Editorial content
+Magazine titles, metadata, visuals and concise editorial summaries are migrated. Full long form article bodies should be imported from an owned Wix CMS export or the original editorial source files before Wix is permanently disconnected.
