@@ -1,0 +1,36 @@
+name: Import Wix assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/import_wix_assets.py"
+      - ".github/workflows/import-wix-assets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Crawl current site and localize assets
+        run: python scripts/import_wix_assets.py
+      - name: Commit imported assets
+        run: |
+          git config user.name "gyw-migration-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/wix migration *.html */*.html assets/*.css || true
+          if git diff --cached --quiet; then
+            echo "No asset changes"
+          else
+            git commit -m "Localize Wix images and refresh migration inventory"
+            git push
+          fi
